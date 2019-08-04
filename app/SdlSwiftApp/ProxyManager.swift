@@ -13,11 +13,19 @@ class ProxyManager: NSObject, SDLManagerDelegate {
 
         let appName = "SdlSwiftApp"
 
+        // for web emulator
+        let ipAddress = "m.sdl.tools"
+        let port: UInt16 = 16860
+
+        // for docker emulator
+        //        let ipAddress = "localhost"
+        //        let port: UInt16 = 12345
+
         let lifecycleConfiguration = SDLLifecycleConfiguration(
             appName: appName,
             fullAppId: "1234",
-            ipAddress: "localhost",
-            port: 12345
+            ipAddress: ipAddress,
+            port: port
         )
 
         if let appImage = UIImage(named: "sdlicon.png") {
