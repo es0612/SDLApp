@@ -23,6 +23,7 @@
 		934B116322F6B20F007F83D1 /* Succinct.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 934B116022F6B1C1007F83D1 /* Succinct.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		934B116422F6B214007F83D1 /* Nimble.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 934B115C22F6B1A5007F83D1 /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		934B116522F6B218007F83D1 /* Quick.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 934B115E22F6B1B1007F83D1 /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		934B116722F6B86B007F83D1 /* ProxyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934B116622F6B86B007F83D1 /* ProxyManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +69,7 @@
 		934B115C22F6B1A5007F83D1 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		934B115E22F6B1B1007F83D1 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
 		934B116022F6B1C1007F83D1 /* Succinct.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Succinct.framework; path = Carthage/Build/iOS/Succinct.framework; sourceTree = "<group>"; };
+		934B116622F6B86B007F83D1 /* ProxyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +125,7 @@
 				934B113822F6AAE1007F83D1 /* LaunchScreen.storyboard */,
 				934B114F22F6AE77007F83D1 /* main.swift */,
 				934B113122F6AAE0007F83D1 /* ViewController.swift */,
+				934B116622F6B86B007F83D1 /* ProxyManager.swift */,
 			);
 			path = SdlSwiftApp;
 			sourceTree = "<group>";
@@ -278,6 +281,7 @@
 			files = (
 				934B113022F6AAE0007F83D1 /* AppDelegate.swift in Sources */,
 				934B115022F6AE77007F83D1 /* main.swift in Sources */,
+				934B116722F6B86B007F83D1 /* ProxyManager.swift in Sources */,
 				934B113222F6AAE0007F83D1 /* ViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
