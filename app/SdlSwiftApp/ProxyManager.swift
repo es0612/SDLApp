@@ -8,19 +8,21 @@ class ProxyManager: NSObject, SDLManagerDelegate {
 
     static let sharedManager = ProxyManager()
 
+    let appName = "SdlSwiftApp"
+
+    // for web emulator
+    let ipAddress = "m.sdl.tools"
+    var port: UInt16!
+
+    // for docker emulator
+    //        let ipAddress = "localhost"
+    //        let port: UInt16 = 12345
+
     private override init() {
         super.init()
+    }
 
-        let appName = "SdlSwiftApp"
-
-        // for web emulator
-        let ipAddress = "m.sdl.tools"
-        let port: UInt16 = 15451
-
-        // for docker emulator
-        //        let ipAddress = "localhost"
-        //        let port: UInt16 = 12345
-
+    func setUp() {
         let lifecycleConfiguration = SDLLifecycleConfiguration(
             appName: appName,
             fullAppId: "1234",
@@ -56,9 +58,13 @@ class ProxyManager: NSObject, SDLManagerDelegate {
     }
 
     func connect() {
+        setUp()
+
         sdlManager.start { (success, error) in
             if success {
                 print("Connected.")
+            } else {
+                print("Connection failed.")
             }
         }
     }
