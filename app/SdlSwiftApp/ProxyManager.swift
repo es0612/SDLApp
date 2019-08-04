@@ -15,7 +15,7 @@ class ProxyManager: NSObject, SDLManagerDelegate {
 
         // for web emulator
         let ipAddress = "m.sdl.tools"
-        let port: UInt16 = 16860
+        let port: UInt16 = 15451
 
         // for docker emulator
         //        let ipAddress = "localhost"
@@ -29,6 +29,7 @@ class ProxyManager: NSObject, SDLManagerDelegate {
         )
 
         if let appImage = UIImage(named: "sdlicon.png") {
+            // UIImageからSDL標準のSDLArtworkに変換
             let appIcon = SDLArtwork(
                 image: appImage,
                 name: "mfsdlapp.png",
@@ -70,6 +71,26 @@ class ProxyManager: NSObject, SDLManagerDelegate {
 
     func hmiLevel(_ oldLevel: SDLHMILevel, didChangeToLevel newLevel: SDLHMILevel) {
         print("Went from HMI level:\(oldLevel) to HMI level:\(newLevel)")
-    }
 
+        // 画面の更新はlevelがfullの時に行う
+        if newLevel == .full {
+            // アプリから車載機の画面アップデートする際に必須
+            sdlManager.screenManager.beginUpdates()
+
+            //更新処理
+            sdlManager.screenManager.textField1 = "text 1"
+            sdlManager.screenManager.textField1 = "text 2"
+            sdlManager.screenManager.textField1 = "text 3"
+            sdlManager.screenManager.textField1 = "text 4"
+
+            // アプリから車載機の画面アップデートする際に必須
+            sdlManager.screenManager.endUpdates { (error) in
+                if error == nil {
+                    print("UI updated.")
+                } else {
+                    print("UI update failed. Error: \(String(describing: error))")
+                }
+            }
+        }
+    }
 }

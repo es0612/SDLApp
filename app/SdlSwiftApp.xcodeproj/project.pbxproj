@@ -124,8 +124,8 @@
 				934B113B22F6AAE1007F83D1 /* Info.plist */,
 				934B113822F6AAE1007F83D1 /* LaunchScreen.storyboard */,
 				934B114F22F6AE77007F83D1 /* main.swift */,
-				934B113122F6AAE0007F83D1 /* SetUpViewController.swift */,
 				934B116622F6B86B007F83D1 /* ProxyManager.swift */,
+				934B113122F6AAE0007F83D1 /* SetUpViewController.swift */,
 			);
 			path = SdlSwiftApp;
 			sourceTree = "<group>";
