@@ -85,8 +85,8 @@ class ProxyManager: NSObject, SDLManagerDelegate {
 
             // 更新処理　ボタン
             let stateButton = setStateButton()
-            sdlManager.screenManager.softButtonObjects = [stateButton]
-
+            let alertButton = setAlertButton()
+            sdlManager.screenManager.softButtonObjects = [stateButton, alertButton]
 
             // アプリから車載機の画面アップデートする際に必須
             sdlManager.screenManager.endUpdates { (error) in
@@ -125,5 +125,33 @@ class ProxyManager: NSObject, SDLManagerDelegate {
         }
 
         return sbObj1
+    }
+
+    func setAlertButton() -> SDLSoftButtonObject {
+        let image = UIImage(named: "sdlicon.png")
+        let artwork = SDLArtwork(image: image!, persistent: true, as: .PNG)
+        let sbState21 = SDLSoftButtonState(stateName: "State21", text: "alert", artwork: artwork)
+        let sbObj2
+            = SDLSoftButtonObject(name: "Button2", states: [sbState21], initialStateName: "State21")
+            {
+                (buttonPress, buttonEvent) in
+                guard buttonPress != nil else { return }
+                print("Button 2 Pressed!")
+
+                let alert = SDLAlert(
+                    alertText1: "Cancel Button Pushed",
+                    alertText2: "Wait for 5 Sec to dismiss",
+                    alertText3: "..."
+                )
+
+                // ５秒でアラートを閉じる
+                alert.duration = 5000 as NSNumber & SDLInt
+                self.sdlManager.send(request: alert) { (request, response, error) in
+                    if response?.resultCode == .success { }
+
+                }
+        }
+
+        return sbObj2
     }
 }
