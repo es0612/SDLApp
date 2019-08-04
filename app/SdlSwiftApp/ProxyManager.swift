@@ -88,6 +88,9 @@ class ProxyManager: NSObject, SDLManagerDelegate {
             let alertButton = setAlertButton()
             sdlManager.screenManager.softButtonObjects = [stateButton, alertButton]
 
+            // 更新処理　ハンバーガーメニュー
+            self.sdlManager.screenManager.menu = [setMenuItem1(), setMenuItem2()]
+
             // アプリから車載機の画面アップデートする際に必須
             sdlManager.screenManager.endUpdates { (error) in
                 if error == nil {
@@ -153,5 +156,25 @@ class ProxyManager: NSObject, SDLManagerDelegate {
         }
 
         return sbObj2
+    }
+
+    func setMenuItem1() -> SDLMenuCell {
+        let cell00 = SDLMenuCell(title: "Menu Item without Submenu", icon: nil, voiceCommands: nil) { (triggerSource: SDLTriggerSource) in
+           print("First Menu Item Selected: \(triggerSource)")
+        }
+
+        return cell00
+    }
+
+    func setMenuItem2() -> SDLMenuCell {
+        let cell10 = SDLMenuCell(title: "Submenu Item A", icon: nil, voiceCommands: nil) { (triggerSource: SDLTriggerSource) in
+            print("Submenu Item A Selected: \(triggerSource)")
+        }
+        let cell11 = SDLMenuCell(title: "Submenu Item B", icon: nil, voiceCommands: nil) { (triggerSource: SDLTriggerSource) in
+            print("Submenu Item B Selected: \(triggerSource)")
+        }
+        let cell01 = SDLMenuCell(title: "Menu Item with Submenu", icon: nil, subCells:[cell10, cell11])
+
+        return cell01
     }
 }
