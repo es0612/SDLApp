@@ -35,7 +35,7 @@
   ```
 
 + Ubuntu上に環境を構築する
-  - Web版は共用のため待ち時間が発生するなどする場合がある
+  - Web版は共用のため待ち時間が発生するなどする場合がある
   - Docker版は対応されていない機能などが含まれる（らしい）
 
 
@@ -63,7 +63,7 @@ git clone --recursive https://github.com/smartdevicelink/sdl_ios.git
 for product
 - github "Thomvis/BrightFutures"
 - github "PureLayout/PureLayout"
-- github
+- github "smartdevicelink/sdl_ios"
 
 for test
 - github "Quick/Quick"
