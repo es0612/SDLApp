@@ -30,7 +30,7 @@ class SetUpViewController: UIViewController {
             portTextField
                 .autoAlignAxis(toSuperviewMarginAxis: .horizontal)
 
-            connectButton.autoPinEdge(.top, to: .bottom, of: portTextField, withOffset: 48.0)
+            connectButton.autoPinEdge(.top, to: .bottom, of: portTextField, withOffset: 6.0)
             connectButton.autoAlignAxis(toSuperviewMarginAxis: .vertical)
 
             didSetupConstraints = true

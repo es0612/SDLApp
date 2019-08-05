@@ -6,6 +6,7 @@ class ProxyManager: NSObject, SDLManagerDelegate {
 
     fileprivate var sdlManager: SDLManager!
 
+    // singleton
     static let sharedManager = ProxyManager()
 
     let appName = "SdlSwiftApp"
@@ -69,8 +70,7 @@ class ProxyManager: NSObject, SDLManagerDelegate {
         }
     }
 
-
-    // delegate methods
+    // MARK: - delegate Methods
     func managerDidDisconnect() {
         print("Manager disconnected.")
     }
@@ -83,11 +83,14 @@ class ProxyManager: NSObject, SDLManagerDelegate {
             // アプリから車載機の画面アップデートする際に必須
             sdlManager.screenManager.beginUpdates()
 
+            // 画面テンプレート　変更
+            setScreenTemplete()
+
             // 更新処理 text
-            sdlManager.screenManager.textField1 = "text 1"
-            sdlManager.screenManager.textField1 = "text 2"
-            sdlManager.screenManager.textField1 = "text 3"
-            sdlManager.screenManager.textField1 = "text 4"
+            sdlManager.screenManager.textField1 = "This app is sample"
+            //            sdlManager.screenManager.textField1 = "text 2"
+            //            sdlManager.screenManager.textField1 = "text 3"
+            //            sdlManager.screenManager.textField1 = "text 4"
 
             // 更新処理　ボタン
             let stateButton = setStateButton()
@@ -108,6 +111,7 @@ class ProxyManager: NSObject, SDLManagerDelegate {
         }
     }
 
+    // MARK: - local Methods
     func setStateButton() -> SDLSoftButtonObject {
         let image1 = UIImage(named: "spring.png")
         let artwork1 = SDLArtwork(image: image1!, persistent: true, as: .PNG)
@@ -165,22 +169,37 @@ class ProxyManager: NSObject, SDLManagerDelegate {
     }
 
     func setMenuItem1() -> SDLMenuCell {
-        let cell00 = SDLMenuCell(title: "Menu Item without Submenu", icon: nil, voiceCommands: nil) { (triggerSource: SDLTriggerSource) in
-           print("First Menu Item Selected: \(triggerSource)")
+        let cell00 = SDLMenuCell(title: "Menu Item without Submenu", icon: nil, voiceCommands: nil)
+        { (triggerSource: SDLTriggerSource) in
+            print("First Menu Item Selected: \(triggerSource)")
         }
 
         return cell00
     }
 
     func setMenuItem2() -> SDLMenuCell {
-        let cell10 = SDLMenuCell(title: "Submenu Item A", icon: nil, voiceCommands: nil) { (triggerSource: SDLTriggerSource) in
+        let cell10 = SDLMenuCell(title: "Submenu Item A", icon: nil, voiceCommands: nil)
+        { (triggerSource: SDLTriggerSource) in
             print("Submenu Item A Selected: \(triggerSource)")
         }
-        let cell11 = SDLMenuCell(title: "Submenu Item B", icon: nil, voiceCommands: nil) { (triggerSource: SDLTriggerSource) in
+
+        let cell11 = SDLMenuCell(title: "Submenu Item B", icon: nil, voiceCommands: nil)
+        { (triggerSource: SDLTriggerSource) in
             print("Submenu Item B Selected: \(triggerSource)")
         }
+
         let cell01 = SDLMenuCell(title: "Menu Item with Submenu", icon: nil, subCells:[cell10, cell11])
 
         return cell01
+    }
+
+    func setScreenTemplete() {
+        let display = SDLSetDisplayLayout(predefinedLayout: .media)
+
+        sdlManager.send(request: display) { (request, response, error) in
+            if response?.resultCode == .success {
+                print("The template has been set successfully")
+            }
+        }
     }
 }
