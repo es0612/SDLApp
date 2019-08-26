@@ -11,13 +11,8 @@ class ProxyManager: NSObject, SDLManagerDelegate {
 
     let appName = "SdlSwiftApp"
 
-    // for web emulator
     let ipAddress = "m.sdl.tools"
     var port: UInt16!
-
-    // for docker emulator
-    //        let ipAddress = "localhost"
-    //        let port: UInt16 = 12345
 
     private override init() {
         super.init()

@@ -42,7 +42,7 @@ class SetUpViewController: UIViewController {
 
         view.backgroundColor = .white
 
-        portTextField.placeholder = "Port numberr"
+        portTextField.placeholder = "Port number"
 
         connectButton.setTitle("connect", for: .normal)
         connectButton.addTarget(
