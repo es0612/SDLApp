@@ -8,7 +8,7 @@ class ProxyManager: NSObject {
     fileprivate var sdlManager: SDLManager!
     static let sharedManager = ProxyManager()
 
-    let appName = "doNothingApp"
+    let appName = "hungryApp"
     let ipAddress = "m.sdl.tools"
     var port: UInt16!
 
@@ -21,6 +21,7 @@ class ProxyManager: NSObject {
         sdlManager.start { (success, error) in
             if success {
                 print("Connected.")
+
                 self.sdlManager.subscribe(to: .SDLDidReceiveVehicleData,
                                           observer: self,
                                           selector: #selector(self.vehicleDataNotification(_:))
