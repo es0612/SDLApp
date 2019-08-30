@@ -13,7 +13,15 @@ class ProxyManager: NSObject {
     var port: UInt16!
 
     var firstHmiState: SDLHMILevel = .none
-    var speedValue = "0.0"
+
+    var fuelLevelValue = 100.0
+    let hungryMessage = "ぐぅううう。お腹が減ったよぉ。"
+
+    let laughImage = UIImage(named: "laugh")
+    let smileImage = UIImage(named: "smile")
+    let angryImage = UIImage(named: "angry")
+    let crtImage = UIImage(named: "cry")
+
 
     func connect() {
         setUp()
@@ -22,9 +30,10 @@ class ProxyManager: NSObject {
             if success {
                 print("Connected.")
 
-                self.sdlManager.subscribe(to: .SDLDidReceiveVehicleData,
-                                          observer: self,
-                                          selector: #selector(self.vehicleDataNotification(_:))
+                self.sdlManager.subscribe(
+                    to: .SDLDidReceiveVehicleData,
+                    observer: self,
+                    selector: #selector(self.vehicleDataNotification(_:))
                 )
             } else {
                 print("Connection failed.")
@@ -78,7 +87,7 @@ extension ProxyManager: SDLManagerDelegate {
         if newLevel != .none && firstHmiState == .none {
             firstHmiState = newLevel
 
-            setSubscribeSpeed()
+            setSubscribeFuelLevel()
         }
 
         if newLevel == .full {
@@ -87,21 +96,33 @@ extension ProxyManager: SDLManagerDelegate {
     }
 }
 
-// MARK: - local Methods
+// MARK: - local Methods -> screen
 private extension ProxyManager {
     func updateScreen() {
         sdlManager.screenManager.beginUpdates()
 
         setScreenTemplete()
 
-        sdlManager.screenManager.textField1 = "speed"
-        sdlManager.screenManager.textField2 = speedValue + " kph"
+        sdlManager.screenManager.textField1 = "remaining fuel."
+        sdlManager.screenManager.textField2 = String(fuelLevelValue) + " %"
+        sdlManager.screenManager.textField3 = ""
 
-        guard let appImage = UIImage(named: "sdlicon.png") else {return}
+        var appImage: UIImage? = nil
+
+        if fuelLevelValue > 80 {
+            appImage = laughImage
+        } else if fuelLevelValue > 60 {
+            appImage = smileImage
+        } else if fuelLevelValue > 20 {
+            appImage = angryImage
+        } else {
+            appImage = crtImage
+            sdlManager.screenManager.textField3 = hungryMessage
+        }
+
         sdlManager.screenManager.primaryGraphic
             = SDLArtwork(
-                image: appImage,
-                name: "mfsdlapp.png",
+                image: appImage!,
                 persistent: true,
                 as: .PNG
         )
@@ -126,14 +147,14 @@ private extension ProxyManager {
     }
 }
 
-// vehicle data
-extension ProxyManager {
+// MARK: - local Methods -> vehicle data
+private extension ProxyManager {
 
-    func setSubscribeSpeed() {
-        let subscribeSpeed = SDLSubscribeVehicleData()
-        subscribeSpeed.speed = true as NSNumber
+    func setSubscribeFuelLevel() {
+        let subscribeData = SDLSubscribeVehicleData()
+        subscribeData.fuelLevel = true as NSNumber
 
-        sdlManager.send(request: subscribeSpeed) { (request, response, error) in
+        sdlManager.send(request: subscribeData) { (request, response, error) in
             guard let response = response as? SDLSubscribeVehicleDataResponse else { return }
             guard response.resultCode == .success
                 else {
@@ -144,20 +165,33 @@ extension ProxyManager {
                     default:
                         print("default")
                     }
-
                     return
             }
         }
     }
 
     @objc func vehicleDataNotification(_ notification: SDLRPCNotificationNotification) {
-        guard let onVehicleData = notification.notification as? SDLOnVehicleData,
-            let speed = onVehicleData.speed
-            else {
-                return
-        }
+        guard
+            let onVehicleData = notification.notification as? SDLOnVehicleData,
+            let fuel = onVehicleData.fuelLevel
+            else { return }
 
-        speedValue = speed.stringValue
+        fuelLevelValue = fuel.doubleValue
+        
         updateScreen()
+        sendVoice()
+    }
+}
+
+// MARK: - local Methods -> speech
+private extension ProxyManager {
+    func sendVoice() {
+        if fuelLevelValue < 20.0 {
+            sdlManager.send(request: SDLSpeak(tts: hungryMessage), responseHandler:
+                {(_, response, error) in
+                    guard response?.resultCode == .success else { return }
+
+            })
+        }
     }
 }

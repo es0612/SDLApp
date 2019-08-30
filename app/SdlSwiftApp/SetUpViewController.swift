@@ -28,9 +28,9 @@ class SetUpViewController: UIViewController {
             portTextField
                 .autoAlignAxis(toSuperviewMarginAxis: .vertical)
             portTextField
-                .autoAlignAxis(toSuperviewMarginAxis: .horizontal)
+                .autoPinEdge(.bottom, to: .top, of: connectButton, withOffset: -24.0)
 
-            connectButton.autoPinEdge(.top, to: .bottom, of: portTextField, withOffset: 6.0)
+            connectButton.autoAlignAxis(toSuperviewMarginAxis: .horizontal)
             connectButton.autoAlignAxis(toSuperviewMarginAxis: .vertical)
 
             didSetupConstraints = true
@@ -39,20 +39,29 @@ class SetUpViewController: UIViewController {
     }
 
     override func viewDidLoad() {
-
-        view.backgroundColor = .white
-
         portTextField.placeholder = "Port number"
 
         connectButton.setTitle("connect", for: .normal)
         connectButton.addTarget(
-            self, action: #selector(didTapConnectButton), for: .touchUpInside
+            self,
+            action: #selector(didTapConnectButton),
+            for: .touchUpInside
         )
+
+        applyStyle()
 
         view.addSubview(portTextField)
         view.addSubview(connectButton)
 
         view.updateConstraintsIfNeeded()
+    }
+
+    func applyStyle() {
+        view.backgroundColor = .white
+
+        portTextField.textAlignment = .center
+        portTextField.font = UIFont(name: portTextField.font!.fontName, size: 18)
+
     }
 
     // MARK: - Actions
