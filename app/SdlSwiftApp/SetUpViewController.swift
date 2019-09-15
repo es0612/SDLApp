@@ -8,11 +8,13 @@ class SetUpViewController: UIViewController {
     // MARK: - Views
     private let portTextField: UITextField
     private let connectButton: UIButton
+    private let imageView: UIImageView
 
     // MARK: - Initialization
     init() {
         portTextField = UITextField.newAutoLayout()
         connectButton = UIButton(type: .system)
+        imageView = UIImageView.newAutoLayout()
 
         super.init(nibName: nil, bundle: nil)
     }
@@ -33,6 +35,14 @@ class SetUpViewController: UIViewController {
             connectButton.autoAlignAxis(toSuperviewMarginAxis: .horizontal)
             connectButton.autoAlignAxis(toSuperviewMarginAxis: .vertical)
 
+            imageView.autoAlignAxis(toSuperviewMarginAxis: .vertical)
+            imageView
+                .autoPinEdge(.bottom, to: .top, of: portTextField, withOffset: -12.0)
+            imageView.autoPinEdge(toSuperviewSafeArea: .left)
+            imageView.autoPinEdge(toSuperviewSafeArea: .right)
+            imageView.autoPinEdge(toSuperviewSafeArea: .top)
+
+
             didSetupConstraints = true
         }
         super.updateViewConstraints()
@@ -48,10 +58,15 @@ class SetUpViewController: UIViewController {
             for: .touchUpInside
         )
 
+        let carImage = UIImage(named: "car_blue")
+        imageView.image = carImage
+
+
         applyStyle()
 
         view.addSubview(portTextField)
         view.addSubview(connectButton)
+        view.addSubview(imageView)
 
         view.updateConstraintsIfNeeded()
     }

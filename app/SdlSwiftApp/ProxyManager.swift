@@ -11,8 +11,8 @@ class ProxyManager: NSObject {
     let appName = "hungryApp"
     let ipAddress = "m.sdl.tools"
     var port: UInt16!
-    //    let ipAddress = "10.0.0.1"
-    //    var port = "12345"
+//        let ipAddress = "10.0.0.1"
+//        var port = "12345"
 
     var firstHmiState: SDLHMILevel = .none
 
@@ -38,7 +38,6 @@ class ProxyManager: NSObject {
     var resetStatus2: Int = 0
 
     var carImage = UIImage(named: "car_blue")
-
 
     func connect() {
         setUp()
@@ -193,10 +192,11 @@ private extension ProxyManager {
 
         if speedValue == "0" {
             appImage = amuro1
+            sendVoice("いつでも行けます")
         } else {
             appImage = amuro2
-            sdlManager.screenManager.textField1 = "アムロいきまあああす！！"
-            sendVoice("アムロいっきまぁあす！！")
+            sdlManager.screenManager.textField1 = "いきまあああす！！"
+            sendVoice("アムロいっきまぁああす！！")
         }
 
         sdlManager.screenManager.primaryGraphic
@@ -220,13 +220,7 @@ private extension ProxyManager {
 
         setScreenTempleteForCar()
 
-        sdlManager.screenManager.textField1 = "ワシにまかせろ"
-        sdlManager.screenManager.textField2 = ""
-        sdlManager.screenManager.textField3 = ""
-
         var appImage: UIImage? = nil
-
-
         appImage = carImage
         sendVoice("ワシにまかせろ")
 
@@ -236,6 +230,10 @@ private extension ProxyManager {
                 persistent: true,
                 as: .PNG
         )
+
+        sdlManager.screenManager.textField1 = "ワシにまかせろ"
+        sdlManager.screenManager.textField2 = ""
+        sdlManager.screenManager.textField3 = ""
 
         sdlManager.screenManager.endUpdates { (error) in
             if error == nil {
@@ -249,25 +247,27 @@ private extension ProxyManager {
     func setCarScreen2() {
         sdlManager.screenManager.beginUpdates()
 
-        sdlManager.screenManager.textField1 = "今日のマラソン大会見た？"
-        sdlManager.screenManager.textField1 = "最近の煽り運転ひどいよねぇ"
-        sdlManager.screenManager.textField1 = "消費税の増税についてどう思う？"
+        let randomValue = Int.random(in: 0..<5)
+
+        if randomValue == 0 {
+            sdlManager.screenManager.textField1 = "今日のマラソン大会見た？"
+            sendVoice("今日のマラソン大会見た？")
+        } else if randomValue == 1 {
+            sdlManager.screenManager.textField1 = "最近の煽り運転ひどいよねぇ"
+            sendVoice("最近の煽り運転ひどいよねぇ")
+        } else if randomValue == 2 {
+            sdlManager.screenManager.textField1 = "消費税の増税についてどう思う？"
+            sendVoice("消費税の増税についてどう思う？")
+        } else if randomValue == 3 {
+            sdlManager.screenManager.textField1 = "ワシはタピオカミルクティーが飲みたい"
+            sendVoice("ワシはタピオカミルクティーが飲みたい")
+        } else if randomValue == 4 {
+            sdlManager.screenManager.textField1 = "ワシはタピオカミルクティーが飲みたい"
+            sendVoice("ワシはタピオカミルクティーが飲みたい")
+        }
 
         sdlManager.screenManager.textField2 = ""
         sdlManager.screenManager.textField3 = ""
-
-        var appImage: UIImage? = nil
-
-
-        appImage = carImage
-        sendVoice("消費税の増税についてどう思う？")
-
-        sdlManager.screenManager.primaryGraphic
-            = SDLArtwork(
-                image: appImage!,
-                persistent: true,
-                as: .PNG
-        )
 
         sdlManager.screenManager.endUpdates { (error) in
             if error == nil {
@@ -327,8 +327,11 @@ private extension ProxyManager {
             actionStatus = 0
             resetStatus = 0
 
-            setAmuroScreen()
+            setCarScreen()
+            sleep(6)
+            setCarScreen2()
             print("success")
+
         }
     }
 
@@ -362,9 +365,7 @@ private extension ProxyManager {
             actionStatus2 = 0
             resetStatus2 = 0
 
-            setCarScreen()
-            sleep(7)
-            setCarScreen2()
+            setAmuroScreen()
             print("success")
         }
     }
@@ -398,7 +399,6 @@ private extension ProxyManager {
                 guard response?.resultCode == .success else { return }
 
         })
-
     }
 }
 
@@ -497,3 +497,4 @@ extension ProxyManager {
         }
     }
 }
+
