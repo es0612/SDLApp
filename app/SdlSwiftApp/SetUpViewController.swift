@@ -38,8 +38,7 @@ class SetUpViewController: UIViewController {
             imageView.autoAlignAxis(toSuperviewMarginAxis: .vertical)
             imageView
                 .autoPinEdge(.bottom, to: .top, of: portTextField, withOffset: -12.0)
-            imageView.autoPinEdge(toSuperviewSafeArea: .left)
-            imageView.autoPinEdge(toSuperviewSafeArea: .right)
+
             imageView.autoPinEdge(toSuperviewSafeArea: .top)
 
 

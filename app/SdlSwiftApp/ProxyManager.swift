@@ -2,7 +2,6 @@ import Foundation
 
 import SmartDeviceLink
 
-
 class ProxyManager: NSObject {
 
     fileprivate var sdlManager: SDLManager!
@@ -127,7 +126,7 @@ private extension ProxyManager {
 
         sdlManager.screenManager.textField1 = "remaining fuel."
         sdlManager.screenManager.textField2 = String(fuelLevelValue) + " %"
-        sdlManager.screenManager.textField3 = ""
+        sdlManager.screenManager.textField3 = "AC設定温度: 28度"
 
         var appImage: UIImage? = nil
 
