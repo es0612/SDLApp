@@ -311,16 +311,16 @@ private extension ProxyManager {
             return
         }
 
-        if data > 200 && actionStatus == 0 {
+        if data > 100 && actionStatus == 0 {
             resetStatus = 0
             actionStatus = 1
-        } else if data < -200 && actionStatus == 1 {
+        } else if data < -100 && actionStatus == 1 {
             resetStatus = 0
             actionStatus = 2
-        } else if data > 200 && actionStatus == 2 {
+        } else if data > 100 && actionStatus == 2 {
             resetStatus = 0
             actionStatus = 3
-        } else if data < -200 && actionStatus == 3 {
+        } else if data < -100 && actionStatus == 3 {
             resetStatus = 0
             actionStatus = 4
         } else if actionStatus == 4 {
